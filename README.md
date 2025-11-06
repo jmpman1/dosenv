@@ -21,14 +21,21 @@ A Python-based load testing tool for legitimate stress testing and performance e
 ```bash
 pip install -r requirements.txt
 ```
-
+`uv` can also be used to add the dependencies to the script.
+```bash
+uv add --script dosenv.py -r requirements.txt
+```
 ## Usage
 
 ### Basic Example
 
 Test a local server with 1000 requests and 50 concurrent connections:
 ```bash
-python load_tester.py -u http://localhost:8000 -n 1000 -c 50
+python dosenv.py -u http://localhost:8000 -n 1000 -c 50
+```
+Using `uv` to run the script:
+```bash
+uv run --script dosenv.py -u http://localhost:8000 -n 1000 -c 50
 ```
 
 ### Command Line Options
@@ -47,31 +54,56 @@ python load_tester.py -u http://localhost:8000 -n 1000 -c 50
 
 **GET Request:**
 ```bash
-python load_tester.py -u http://localhost:8000/api/users -n 500 -c 25
+python dosenv.py -u http://localhost:8000/api/users -n 500 -c 25
+```
+Using `uv` to run the script:
+```bash
+uv run --script dosenv.py -u http://localhost:8000/api/users -n 500 -c 25
 ```
 
 **POST Request with JSON:**
 ```bash
-python load_tester.py -u http://localhost:8000/api/login -n 200 -c 10 \
+python dosenv.py -u http://localhost:8000/api/login -n 200 -c 10 \
+  -m POST -d '{"username":"test","password":"test"}' \
+  -H "Content-Type: application/json"
+```
+Using `uv` to run the script:
+```bash
+uv run --script dosenv.py -u http://localhost:8000/api/login -n 200 -c 10 \
   -m POST -d '{"username":"test","password":"test"}' \
   -H "Content-Type: application/json"
 ```
 
 **With Authentication Header:**
 ```bash
-python load_tester.py -u http://localhost:8000/api/protected -n 1000 -c 50 \
+python dosenv.py -u http://localhost:8000/api/protected -n 1000 -c 50 \
+  -H "Authorization: Bearer YOUR_TOKEN_HERE"
+```
+Using `uv` to run the script:
+```bash
+uv run --script dosenv.py-u http://localhost:8000/api/protected -n 1000 -c 50 \
   -H "Authorization: Bearer YOUR_TOKEN_HERE"
 ```
 
 **With Proxy:**
 ```bash
-python load_tester.py -u http://example.com -n 1000 -c 50 \
+python dosenv.py -u http://example.com -n 1000 -c 50 \
+  -p http://proxy.example.com:8080
+```
+Using `uv` to run the script:
+```bash
+uv run --script dosenv.py -u http://example.com -n 1000 -c 50 \
   -p http://proxy.example.com:8080
 ```
 
 **With Authenticated Proxy:**
 ```bash
-python load_tester.py -u http://example.com -n 1000 -c 50 \
+python dosenv.py -u http://example.com -n 1000 -c 50 \
+  -p http://username:password@proxy.example.com:8080
+```
+Using `uv` to run the script:
+```bash
+uv run --script dosenv.py -u http://example.com -n 1000 -c 50 \
   -p http://username:password@proxy.example.com:8080
 ```
 
